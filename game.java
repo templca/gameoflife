@@ -10,27 +10,103 @@ public class game
 {
     // instance variables - replace the example below with your own
 
-    boolean present [][] = new boolean [21][21];
-    boolean future [][] = new boolean [21][21];
+    boolean present [][] = new boolean [22][22];
+    boolean future [][] = new boolean [22][22];
     int neighbours;
     int y;
     int x;
 
     boolean check(boolean alive){
-        for (int ii=1;ii<20;ii++) {
-            alive=present[x][y];
-
+        alive=present[x][y];
+        if (x==0) {
             if (present[x][y+1]==true) {
                 neighbours++;
             } 
-            if (present[x+1][y]==true) {
+            if (present[x][y-1]==true) {
                 neighbours++;
             }
             if (present[x+1][y+1]==true) {
+                neighbours++; 
+            }
+            if (present[x+1][y-1]==true) {
+                neighbours++; 
+            }
+            if (present[x+1][y]==true) {
+                neighbours++; 
+            }
+        } else if (x > 21) { 
+            if (present[x][y+1]==true) {
+                neighbours++;
+            } 
+            if (present[x][y-1]==true) {
                 neighbours++;
             }
-
+            if (present[x-1][y+1]==true) {
+                neighbours++; }
+            if (present[x-1][y]==true) {
+                neighbours++; 
+            }
+            if (present[x-1][y-1]==true) {
+                neighbours++; 
+            }
+        } else if (y==0) {
+            if (present[x][y+1]==true) {
+                neighbours++;
+            } 
+            if (present[x+1][y+1]==true) {
+                neighbours++; 
+            }
+            if (present[x+1][y]==true) {
+                neighbours++; 
+            }
+            if (present[x-1][y+1]==true) {
+                neighbours++; }
+            if (present[x-1][y]==true) {
+                neighbours++; 
+            }
+        } else if (y > 21) {
+            if (present[x][y-1]==true) {
+                neighbours++;
+            }
+            if (present[x+1][y-1]==true) {
+                neighbours++; 
+            }
+            if (present[x+1][y]==true) {
+                neighbours++; 
+            }
+            if (present[x-1][y]==true) {
+                neighbours++; 
+            }
+            if (present[x-1][y-1]==true) {
+                neighbours++; 
+            }
+        } else {
+            if (present[x][y+1]==true) {
+                neighbours++;
+            } 
+            if (present[x][y-1]==true) {
+                neighbours++;
+            }
+            if (present[x+1][y+1]==true) {
+                neighbours++; 
+            }
+            if (present[x+1][y-1]==true) {
+                neighbours++; 
+            }
+            if (present[x+1][y]==true) {
+                neighbours++; 
+            }
+            if (present[x-1][y+1]==true) {
+                neighbours++; }
+            if (present[x-1][y]==true) {
+                neighbours++; 
+            }
+            if (present[x-1][y-1]==true) {
+                neighbours++; 
+            }
         }
+        
+        
         if (alive==true && neighbours==2||neighbours==3){ 
             future[x][y]=true;
             return alive;  }
@@ -45,8 +121,8 @@ public class game
             return !alive;}
         else {
             future[x][y]=false;
-            return !alive;}
-
+            return !alive;
+        }
     }
 
     /**
@@ -55,13 +131,13 @@ public class game
     public game()
     {
         // initialise instance variables
-        present[3][2]=true;
-        present[2][3]=true;
-        present[2][2]=true;
+        present[3][5]=true;
+        present[4][5]=true;
+        present[5][5]=true;
         x = 0;
         System.out.println("first gen");
-        for (x=0;x<20;x++){
-            for (y=0;y<20;y++){
+        for (x=1;x<21;x++){
+            for (y=1;y<21;y++){
                 if (present[x][y]==true){
                     System.out.print("x ");
                 } else System.out.print("0 ");
@@ -70,9 +146,10 @@ public class game
         }
 
         System.out.println("next gen");
-        for (x=0;x<20;x++){
-            for (y=0;y<20;y++){
-                if (check(future[x][y]==true)){
+        for (x=1;x<21;x++){
+            for (y=1;y<21;y++){
+                check(present[x][y]);
+                if (future[x][y]==true){
                     System.out.print("x ");
                 } else System.out.print("0 ");
             }
