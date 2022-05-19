@@ -5,6 +5,8 @@
  * @author cara templeton
  * @version 12/05
  * 13/05
+ * 18/05
+ * 19/05
  */
 public class game
 {
@@ -18,7 +20,7 @@ public class game
 
     boolean check(boolean alive){
         alive=present[x][y];
-        if (x==0) {
+        if (x==1) {
             if (present[x][y+1]==true) {
                 neighbours++;
             } 
@@ -49,7 +51,7 @@ public class game
             if (present[x-1][y-1]==true) {
                 neighbours++; 
             }
-        } else if (y==0) {
+        } else if (y==1) {
             if (present[x][y+1]==true) {
                 neighbours++;
             } 
@@ -63,7 +65,7 @@ public class game
                 neighbours++; }
             if (present[x-1][y]==true) {
                 neighbours++; 
-            }
+            } 
         } else if (y > 21) {
             if (present[x][y-1]==true) {
                 neighbours++;
@@ -105,8 +107,7 @@ public class game
                 neighbours++; 
             }
         }
-        
-        
+
         if (alive==true && neighbours==2||neighbours==3){ 
             future[x][y]=true;
             return alive;  }
@@ -123,6 +124,7 @@ public class game
             future[x][y]=false;
             return !alive;
         }
+
     }
 
     /**
@@ -131,13 +133,17 @@ public class game
     public game()
     {
         // initialise instance variables
+        present[20][20]=true;
+        present[15][3]=true;
+        present[3][2]=true;
+        present[1][1]=true;
         present[3][5]=true;
         present[4][5]=true;
         present[5][5]=true;
         x = 0;
         System.out.println("first gen");
-        for (x=1;x<21;x++){
-            for (y=1;y<21;y++){
+        for (y=1;y<21;y++){
+            for (x=1;x<21;x++){
                 if (present[x][y]==true){
                     System.out.print("x ");
                 } else System.out.print("0 ");
@@ -146,12 +152,15 @@ public class game
         }
 
         System.out.println("next gen");
-        for (x=1;x<21;x++){
-            for (y=1;y<21;y++){
+        for (y=1;y<21;y++){
+            for (x=1;x<21;x++){
                 check(present[x][y]);
                 if (future[x][y]==true){
                     System.out.print("x ");
-                } else System.out.print("0 ");
+                }
+                if (future[x][y]==false) {
+                    System.out.print("0 ");
+                }
             }
             System.out.println();
         }
