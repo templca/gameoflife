@@ -7,6 +7,7 @@
  * 13/05
  * 18/05
  * 19/05
+ * 20/05
  */
 public class game
 {
@@ -14,115 +15,47 @@ public class game
 
     boolean present [][] = new boolean [22][22];
     boolean future [][] = new boolean [22][22];
-    int neighbours;
+    int neighbours=0;
     int y;
     int x;
 
-    boolean check(boolean alive){
-        alive=present[x][y];
-        if (x==1) {
-            if (present[x][y+1]==true) {
-                neighbours++;
-            } 
-            if (present[x][y-1]==true) {
-                neighbours++;
-            }
-            if (present[x+1][y+1]==true) {
-                neighbours++; 
-            }
-            if (present[x+1][y-1]==true) {
-                neighbours++; 
-            }
-            if (present[x+1][y]==true) {
-                neighbours++; 
-            }
-        } else if (x > 21) { 
-            if (present[x][y+1]==true) {
-                neighbours++;
-            } 
-            if (present[x][y-1]==true) {
-                neighbours++;
-            }
-            if (present[x-1][y+1]==true) {
-                neighbours++; }
-            if (present[x-1][y]==true) {
-                neighbours++; 
-            }
-            if (present[x-1][y-1]==true) {
-                neighbours++; 
-            }
-        } else if (y==1) {
-            if (present[x][y+1]==true) {
-                neighbours++;
-            } 
-            if (present[x+1][y+1]==true) {
-                neighbours++; 
-            }
-            if (present[x+1][y]==true) {
-                neighbours++; 
-            }
-            if (present[x-1][y+1]==true) {
-                neighbours++; }
-            if (present[x-1][y]==true) {
-                neighbours++; 
-            } 
-        } else if (y > 21) {
-            if (present[x][y-1]==true) {
-                neighbours++;
-            }
-            if (present[x+1][y-1]==true) {
-                neighbours++; 
-            }
-            if (present[x+1][y]==true) {
-                neighbours++; 
-            }
-            if (present[x-1][y]==true) {
-                neighbours++; 
-            }
-            if (present[x-1][y-1]==true) {
-                neighbours++; 
-            }
-        } else {
-            if (present[x][y+1]==true) {
-                neighbours++;
-            } 
-            if (present[x][y-1]==true) {
-                neighbours++;
-            }
-            if (present[x+1][y+1]==true) {
-                neighbours++; 
-            }
-            if (present[x+1][y-1]==true) {
-                neighbours++; 
-            }
-            if (present[x+1][y]==true) {
-                neighbours++; 
-            }
-            if (present[x-1][y+1]==true) {
-                neighbours++; }
-            if (present[x-1][y]==true) {
-                neighbours++; 
-            }
-            if (present[x-1][y-1]==true) {
-                neighbours++; 
-            }
+    void check(boolean alive){
+        neighbours=0;
+        if (present[x][y+1]==true) {
+            neighbours++;
+        } 
+        if (present[x][y-1]==true) {
+            neighbours++;
+        }
+        if (present[x+1][y+1]==true) {
+            neighbours++; 
+        }
+        if (present[x+1][y-1]==true) {
+            neighbours++; 
+        }
+        if (present[x+1][y]==true) {
+            neighbours++; 
+        }
+        if (present[x-1][y+1]==true) {
+            neighbours++; 
+        }
+        if (present[x-1][y]==true) {
+            neighbours++; 
+        }
+        if (present[x-1][y-1]==true) {
+            neighbours++; 
         }
 
-        if (alive==true && neighbours==2||neighbours==3){ 
-            future[x][y]=true;
-            return alive;  }
-        else if (alive==false && neighbours==3) { 
-            future[x][y]=true;
-            return alive;}
-        else if (alive==true && neighbours < 2) { 
-            future[x][y]=false;
-            return!alive;}
-        else if (alive==true && neighbours > 3) { 
-            future[x][y]=false;
-            return !alive;}
+        if (present[x][y]==true && neighbours==2||neighbours==3){ 
+            future[x][y]=true; }
+        else if (present[x][y]==false && neighbours==3) { 
+            future[x][y]=true; }
+        else if (present[x][y]==true && neighbours < 2) { 
+            future[x][y]=false; }
+        else if (present[x][y]==true && neighbours > 3) { 
+            future[x][y]=false; }
         else {
-            future[x][y]=false;
-            return !alive;
+            future[x][y]=false; 
         }
 
     }
@@ -140,7 +73,7 @@ public class game
         present[3][5]=true;
         present[4][5]=true;
         present[5][5]=true;
-        x = 0;
+        
         System.out.println("first gen");
         for (y=1;y<21;y++){
             for (x=1;x<21;x++){
@@ -157,15 +90,12 @@ public class game
                 check(present[x][y]);
                 if (future[x][y]==true){
                     System.out.print("x ");
-                }
-                if (future[x][y]==false) {
-                    System.out.print("0 ");
-                }
+                } else System.out.print("0 ");
             }
             System.out.println();
         }
 
-    }
+    } 
 
     /**
      * An example of a method - replace this comment with your own
