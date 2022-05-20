@@ -9,15 +9,18 @@
  * 19/05
  * 20/05
  */
+
+import java.util.Scanner;
 public class game
 {
     // instance variables - replace the example below with your own
-
     boolean present [][] = new boolean [22][22];
     boolean future [][] = new boolean [22][22];
     int neighbours=0;
     int y;
     int x;
+    boolean running=true;
+    String command;
 
     void check(boolean alive){
         neighbours=0;
@@ -66,6 +69,7 @@ public class game
     public game()
     {
         // initialise instance variables
+        Scanner type = new Scanner(System.in);
         present[20][20]=true;
         present[15][3]=true;
         present[3][2]=true;
@@ -73,7 +77,7 @@ public class game
         present[3][5]=true;
         present[4][5]=true;
         present[5][5]=true;
-        
+
         System.out.println("first gen");
         for (y=1;y<21;y++){
             for (x=1;x<21;x++){
@@ -83,16 +87,25 @@ public class game
             }
             System.out.println();
         }
-
-        System.out.println("next gen");
-        for (y=1;y<21;y++){
-            for (x=1;x<21;x++){
-                check(present[x][y]);
-                if (future[x][y]==true){
-                    System.out.print("x ");
-                } else System.out.print("0 ");
+        
+        while (running==true) {
+            command=type.nextLine();
+            switch (command) {
+                case "next": 
+                System.out.println("next gen");
+                for (y=1;y<21;y++){
+                    for (x=1;x<21;x++){
+                        check(present[x][y]);
+                        if (future[x][y]==true){
+                            System.out.print("x ");
+                        } else System.out.print("0 ");
+                    }
+                    System.out.println();
+                }
+                break;
+                case "end": running=false;
+                break;
             }
-            System.out.println();
         }
 
     } 
