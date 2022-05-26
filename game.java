@@ -8,6 +8,8 @@
  * 18/05
  * 19/05
  * 20/05
+ * 25/05
+ * 26/05
  */
 
 import java.util.Scanner;
@@ -70,6 +72,14 @@ public class game
     {
         // initialise instance variables
         Scanner type = new Scanner(System.in);
+        future[20][20]=true;
+        future[15][3]=true;
+        future[3][2]=true;
+        future[1][1]=true;
+        future[3][5]=true;
+        future[4][5]=true;
+        future[5][5]=true;
+
         present[20][20]=true;
         present[15][3]=true;
         present[3][2]=true;
@@ -78,7 +88,7 @@ public class game
         present[4][5]=true;
         present[5][5]=true;
 
-        System.out.println("first gen");
+        System.out.println("first generation");
         for (y=1;y<21;y++){
             for (x=1;x<21;x++){
                 if (present[x][y]==true){
@@ -87,12 +97,12 @@ public class game
             }
             System.out.println();
         }
-        
+
         while (running==true) {
             command=type.nextLine();
             switch (command) {
                 case "next": 
-                System.out.println("next gen");
+                System.out.println("next generation");
                 for (y=1;y<21;y++){
                     for (x=1;x<21;x++){
                         check(present[x][y]);
@@ -105,20 +115,38 @@ public class game
                 break;
                 case "end": running=false;
                 break;
+                case "current": 
+                System.out.println("this generation");
+                for (y=1;y<21;y++){
+                    for (x=1;x<21;x++){
+                        if (present[x][y]==true){
+                            System.out.print("x ");
+                        } else System.out.print("0 ");
+                    }
+                    System.out.println();
+                }
+                break;
+                case "make alive":
+                int row;
+                int column;
+                System.out.println("what row number?");
+                row=type.nextInt();
+                System.out.println("what column number?");
+                column=type.nextInt();
+                System.out.println("Coordinate [" + row + ", "+ column + "] changed to alive");
+                present[row][column]=true;
+                break;
+                case "make dead":
+                System.out.println("what row number?");
+                row=type.nextInt();
+                System.out.println("what column number?");
+                column=type.nextInt();
+                System.out.println("Coordinate [" + row + ", " + column + "] changed to dead");
+                present[row][column]=false;
+                break;
+                default: System.out.println("try something else");
             }
         }
 
     } 
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
-    }
 }
