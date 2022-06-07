@@ -13,6 +13,7 @@
  * 27/05
  * 1/06
  * 2/06
+ * 8/06
  */
 
 import java.util.Scanner;
@@ -92,7 +93,7 @@ public class game
         labelA=1;
         label1=1;
         System.out.println("first generation");
-        //prints out columns
+        //prints out column numebrs
         System.out.print("    ");
         for (int i=1;i<=arraySize;i++) {
             if (labelA>=10) { System.out.print(labelA++ + " "); }
@@ -100,13 +101,13 @@ public class game
         }
         System.out.println();
         for (y=1;y<=arraySize;y++){
-            //prints out rows
+            //prints out rownumbers
             if (label1>=10) { System.out.print(label1++  + "  "); }
             else { System.out.print(" " +label1++  + "  "); }
             for (x=1;x<=arraySize;x++){ //prints board x for true 0 for false
                 if (present[x][y]==true){
                     System.out.print("x  ");
-                } else System.out.print("0  ");
+                } else System.out.print("o  ");
             }
             System.out.println();
         }
@@ -146,6 +147,50 @@ public class game
                         else { present[x][y]=false; }
                     }
                 }
+                break;
+                case "multiple turns":
+                int turns;
+                System.out.println("how many turns to advance?");
+                turns=type.nextInt();
+                for (y=1;y<=arraySize;y++){
+                    for (x=1;x<=arraySize;x++){
+                        // runs method that checks for neighbours and then prints new board
+                        check(present[x][y]);
+                    }
+                }
+                for (int t=1;t<=turns;t++) { 
+                    //for whatever turns is, it will change the present board into the 
+                    //future board that many times
+                    for (y=1;y<=arraySize;y++){
+                        for (x=1;x<=arraySize;x++){
+                            if (future[x][y]) { present[x][y]=true; }
+                            else { present[x][y]=false; }
+                        }
+                    }
+                }
+                //prints current board
+                labelA=1;
+                label1=1;
+                System.out.println("this generation");
+                //prints out column numbers
+                System.out.print("    ");
+                for (int i=1;i<=arraySize;i++) {
+                    if (labelA>=10) { System.out.print(labelA++ + " "); }
+                    else { System.out.print(labelA++ + "  "); }
+                }
+                System.out.println();
+                for (y=1;y<=arraySize;y++){ 
+                    //prints out row numbers
+                    if (label1>=10) { System.out.print(label1++  + "  "); }
+                    else { System.out.print(" " +label1++  + "  "); }
+                    for (x=1;x<=arraySize;x++){ //prints board
+                        if (present[x][y]==true){
+                            System.out.print("x  ");
+                        } else System.out.print("0  ");
+                    }
+                    System.out.println();
+                }
+                command=type.nextLine();
                 break;
                 //ends loop
                 case "end": running=false;
