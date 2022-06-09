@@ -14,6 +14,7 @@
  * 1/06
  * 2/06
  * 8/06
+ * 9/06
  */
 
 import java.util.Scanner;
@@ -30,6 +31,7 @@ public class game
     int labelA=1;
     int label1=1;
     int arraySize=20;
+    int genNumber=1;
 
     void check(boolean alive){
         // checks for neighbours around the cell
@@ -92,7 +94,7 @@ public class game
 
         labelA=1;
         label1=1;
-        System.out.println("first generation");
+        System.out.println("generation: "+genNumber);
         //prints out column numebrs
         System.out.print("    ");
         for (int i=1;i<=arraySize;i++) {
@@ -107,7 +109,7 @@ public class game
             for (x=1;x<=arraySize;x++){ //prints board x for true 0 for false
                 if (present[x][y]==true){
                     System.out.print("x  ");
-                } else System.out.print("o  ");
+                } else System.out.print("0  ");
             }
             System.out.println();
         }
@@ -119,7 +121,8 @@ public class game
                 case "n":
                 labelA=1;
                 label1=1;
-                System.out.println("next generation"); // next turn
+                genNumber++;
+                System.out.println("generation: "+genNumber); // next turn
                 //prints column numbers
                 System.out.print("    ");
                 for (int i=1;i<=arraySize;i++) {
@@ -149,6 +152,7 @@ public class game
                 }
                 break;
                 case "multiple turns":
+                case "t":
                 int turns;
                 System.out.println("how many turns to advance?");
                 turns=type.nextInt();
@@ -161,6 +165,7 @@ public class game
                 for (int t=1;t<=turns;t++) { 
                     //for whatever turns is, it will change the present board into the 
                     //future board that many times
+                    genNumber++;
                     for (y=1;y<=arraySize;y++){
                         for (x=1;x<=arraySize;x++){
                             if (future[x][y]) { present[x][y]=true; }
@@ -171,7 +176,7 @@ public class game
                 //prints current board
                 labelA=1;
                 label1=1;
-                System.out.println("this generation");
+                System.out.println("generation: "+genNumber);
                 //prints out column numbers
                 System.out.print("    ");
                 for (int i=1;i<=arraySize;i++) {
@@ -200,7 +205,7 @@ public class game
                 //prints current board
                 labelA=1;
                 label1=1;
-                System.out.println("this generation");
+                System.out.println("generation: "+genNumber);
                 //prints out column numbers
                 System.out.print("    ");
                 for (int i=1;i<=arraySize;i++) {
@@ -231,8 +236,12 @@ public class game
                 row=type.nextInt();
                 System.out.println("what row number?");
                 column=type.nextInt();
-                System.out.println("coordinate [" + row + ", "+ column + "] changed to alive");
-                present[row][column]=true;
+                if (row>20|| column>20|| row<=0|| column<=0) { 
+                    System.out.println("coordinate not available.");
+                } else {
+                    System.out.println("coordinate [" + row + ", "+ column + "] changed to alive");
+                    present[row][column]=true; 
+                }
                 command=type.nextLine();
                 break;
                 case "make dead":
@@ -243,8 +252,12 @@ public class game
                 row=type.nextInt();
                 System.out.println("what row number?");
                 column=type.nextInt();
-                System.out.println("coordinate [" + row + ", " + column + "] changed to dead");
-                present[row][column]=true;
+                if (row>20|| column>20|| row<=0|| column<=0) { 
+                    System.out.println("coordinate not available.");
+                } else {
+                    System.out.println("coordinate [" + row + ", "+ column + "] changed to dead");
+                    present[row][column]=false; 
+                }
                 command=type.nextLine();
                 break;
                 default: System.out.println("try something else");
