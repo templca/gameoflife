@@ -16,6 +16,7 @@
  * 8/06
  * 9/06
  * 10/06
+ * 15/06
  */
 
 import java.util.Scanner;
@@ -34,7 +35,7 @@ public class game
     int arraySize=20;
     int genNumber=1;
 
-    void check(boolean alive){
+    void update(boolean alive){
         // checks for neighbours around the cell
         neighbours=0;
         if (present[x][y+1]==true) {
@@ -92,9 +93,12 @@ public class game
         present[4][5]=true;
         present[5][5]=true;
         // just test starting cells
-
+        
+        System.out.println("commands: help (h), next (n), current (c), multiple turns (t), end, revive cells (r), kill cells (k)");
+        System.out.println("add a z (z), glider (g), onion rings (o), spaceship (s)");
         labelA=1;
         label1=1;
+        System.out.println();
         System.out.println("generation: "+genNumber);
         //prints out column numebrs
         System.out.print("    ");
@@ -116,6 +120,7 @@ public class game
         }
 
         while (running==true) {
+        
             command=type.nextLine();
             switch (command.toLowerCase()) {
                 case "next": 
@@ -137,7 +142,7 @@ public class game
                     else { System.out.print(" " +label1++  + "  "); }
                     for (x=1;x<=arraySize;x++){
                         // runs method that checks for neighbours and then prints new board
-                        check(present[x][y]);
+                        update(present[x][y]);
                         if (future[x][y]==true){
                             System.out.print("x  ");
                         } else System.out.print("0  ");
@@ -158,8 +163,7 @@ public class game
                 System.out.println("how many turns to advance?");
                 turns=type.nextInt();
                 for (int t=1;t<=turns;t++) { 
-                    //for whatever turns is, it will change the present board into the 
-                    //future board that many times
+                    
                     genNumber++;
                     labelA=1;
                     label1=1;
@@ -176,14 +180,14 @@ public class game
                         if (label1>=10) { System.out.print(label1++  + "  "); }
                         else { System.out.print(" " +label1++  + "  "); }
                         for (x=1;x<=arraySize;x++){ //prints board
-                            check(present[x][y]);
+                            update(present[x][y]);
                             if (present[x][y]==true){
                                 System.out.print("x  ");
                             } else System.out.print("0  ");
                         }
                         System.out.println();
                     }
-                    for (y=1;y<=arraySize;y++){
+                    for (y=1;y<=arraySize;y++){ //turns new array into first array
                         for (x=1;x<=arraySize;x++){
                             if (future[x][y]) { present[x][y]=true; }
                             else { present[x][y]=false; }
@@ -256,6 +260,7 @@ public class game
                 command=type.nextLine();
                 break;
                 case "glider":
+                case "g":
                 genNumber=1;
                 for (y=1;y<=arraySize;y++){ 
                     for (x=1;x<=arraySize;x++){ //clears board
@@ -302,6 +307,7 @@ public class game
                         } 
                     }
                 }
+                //makes shape in alive cells
                 present[8][8]=true;
                 present[9][8]=true;
                 present[9][9]=true;
@@ -332,6 +338,7 @@ public class game
                 }
                 break;
                 case "onion rings":
+                case "o":
                 genNumber=1;
                 for (y=1;y<=arraySize;y++){ 
                     for (x=1;x<=arraySize;x++){ //clears board
@@ -417,7 +424,6 @@ public class game
                 present[9][16]=true;
                 present[10][16]=true;
 
-                //prints current board
                 labelA=1;
                 label1=1;
                 System.out.println("generation: "+genNumber);
@@ -439,6 +445,53 @@ public class game
                     }
                     System.out.println();
                 }
+                break;
+                case "spaceship":
+                case "s":
+                genNumber=1;
+                for (y=1;y<=arraySize;y++){ 
+                    for (x=1;x<=arraySize;x++){ //clears board
+                        if (present[x][y]==true){
+                            present[x][y]=false;
+                        } 
+                    }
+                }
+                present[1][6]=true;
+                present[1][8]=true;
+                present[2][9]=true;
+                present[3][9]=true;
+                present[4][9]=true;
+                present[5][9]=true;
+                present[5][8]=true;
+                present[5][7]=true;
+                present[4][6]=true;
+                
+                
+                labelA=1;
+                label1=1;
+                System.out.println("generation: "+genNumber);
+                //prints out column numbers
+                System.out.print("    ");
+                for (int i=1;i<=arraySize;i++) {
+                    if (labelA>=10) { System.out.print(labelA++ + " "); }
+                    else { System.out.print(labelA++ + "  "); }
+                }
+                System.out.println();
+                for (y=1;y<=arraySize;y++){ 
+                    //prints out row numbers
+                    if (label1>=10) { System.out.print(label1++  + "  "); }
+                    else { System.out.print(" " +label1++  + "  "); }
+                    for (x=1;x<=arraySize;x++){ //prints board
+                        if (present[x][y]==true){
+                            System.out.print("x  ");
+                        } else System.out.print("0  ");
+                    }
+                    System.out.println();
+                }
+                break;
+                case "help":
+                case "h":
+                System.out.println("command: next or n -");
                 break;
                 default: System.out.println("try something else");
             }
