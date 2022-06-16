@@ -17,6 +17,7 @@
  * 9/06
  * 10/06
  * 15/06
+ * 16/06
  */
 
 import java.util.Scanner;
@@ -93,7 +94,7 @@ public class game
         present[4][5]=true;
         present[5][5]=true;
         // just test starting cells
-        
+
         System.out.println("commands: help (h), next (n), current (c), multiple turns (t), end, revive cells (r), kill cells (k)");
         System.out.println("add a z (z), glider (g), onion rings (o), spaceship (s)");
         labelA=1;
@@ -120,7 +121,7 @@ public class game
         }
 
         while (running==true) {
-        
+
             command=type.nextLine();
             switch (command.toLowerCase()) {
                 case "next": 
@@ -163,7 +164,7 @@ public class game
                 System.out.println("how many turns to advance?");
                 turns=type.nextInt();
                 for (int t=1;t<=turns;t++) { 
-                    
+
                     genNumber++;
                     labelA=1;
                     label1=1;
@@ -465,8 +466,7 @@ public class game
                 present[5][8]=true;
                 present[5][7]=true;
                 present[4][6]=true;
-                
-                
+
                 labelA=1;
                 label1=1;
                 System.out.println("generation: "+genNumber);
@@ -491,7 +491,35 @@ public class game
                 break;
                 case "help":
                 case "h":
-                System.out.println("command: next or n -");
+                System.out.println("What command do you need help with?");
+                System.out.println("1: next");
+                System.out.println("2: multiple turns");
+                System.out.println("3: current");
+                System.out.println("4: revive/kill");
+                System.out.println("5: commands z, glider, onion rings, spaceship");
+                System.out.println("6: end");
+                String help=type.nextLine();
+                switch(help) {
+                    case "1":
+                    System.out.println("next or n - it goes forward one generation");
+                    break;
+                    case "2": 
+                    System.out.println("multiple turns or t - it goes forward as many turns as you want. limit: 2,147,483,647, however, it takes a very long time and gets extremely laggy by 100k generations.");
+                    break;
+                    case "3":
+                    System.out.println("current or c - prints the current generation");
+                    break;
+                    case "4":
+                    System.out.println("revive or r/kill or k - pick a row and a column and it either revives the cell or kills it depending on what command you use.");
+                    break;
+                    case "5":
+                    System.out.println("z, glider or g, onion rings or o and spaceship or s - clears the board and then creates one of those shapes on the board.");
+                    System.out.println("glider and spaceships move across in a straight line");
+                    System.out.println("the z shape disappears completely after 45 generations.");
+                    System.out.println("the onion rings shape just looks cool.");
+                    case "6": System.out.println("end - ends the while loop and quits the game.");
+                }
+
                 break;
                 default: System.out.println("try something else");
             }
