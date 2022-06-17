@@ -18,6 +18,7 @@
  * 10/06
  * 15/06
  * 16/06
+ * 17/06
  */
 
 import java.util.Scanner;
@@ -29,12 +30,14 @@ public class game
     int neighbours=0;
     int y;
     int x;
-    boolean running=true;
+    boolean running=true; //while loop
     String command;
-    int labelA=1;
+    int labelA=1; //row and columm numbers
     int label1=1;
     int arraySize=20;
     int genNumber=1;
+    String alive= "*  "; //dead and alive cell character
+    String dead= "-  ";
 
     void update(boolean alive){
         // checks for neighbours around the cell
@@ -114,8 +117,8 @@ public class game
             else { System.out.print(" " +label1++  + "  "); }
             for (x=1;x<=arraySize;x++){ //prints board x for true 0 for false
                 if (present[x][y]==true){
-                    System.out.print("x  ");
-                } else System.out.print("0  ");
+                    System.out.print(alive);
+                } else System.out.print(dead);
             }
             System.out.println();
         }
@@ -144,9 +147,9 @@ public class game
                     for (x=1;x<=arraySize;x++){
                         // runs method that checks for neighbours and then prints new board
                         update(present[x][y]);
-                        if (future[x][y]==true){
-                            System.out.print("x  ");
-                        } else System.out.print("0  ");
+                        if (present[x][y]==true){
+                            System.out.print(alive);
+                        } else System.out.print(dead);
                     }
                     System.out.println();
                 }
@@ -164,37 +167,41 @@ public class game
                 System.out.println("how many turns to advance?");
                 turns=type.nextInt();
                 for (int t=1;t<=turns;t++) { 
+                    try {
 
-                    genNumber++;
-                    labelA=1;
-                    label1=1;
-                    System.out.println("generation: "+genNumber);
-                    //prints out column numbers
-                    System.out.print("    ");
-                    for (int i=1;i<=arraySize;i++) {
-                        if (labelA>=10) { System.out.print(labelA++ + " "); }
-                        else { System.out.print(labelA++ + "  "); }
-                    }
-                    System.out.println();
-                    for (y=1;y<=arraySize;y++){ 
-                        //prints out row numbers
-                        if (label1>=10) { System.out.print(label1++  + "  "); }
-                        else { System.out.print(" " +label1++  + "  "); }
-                        for (x=1;x<=arraySize;x++){ //prints board
-                            update(present[x][y]);
-                            if (present[x][y]==true){
-                                System.out.print("x  ");
-                            } else System.out.print("0  ");
+                        genNumber++;
+                        labelA=1;
+                        label1=1;
+                        System.out.println("generation: "+genNumber);
+                        //prints out column numbers
+                        System.out.print("    ");
+                        for (int i=1;i<=arraySize;i++) {
+                            if (labelA>=10) { System.out.print(labelA++ + " "); }
+                            else { System.out.print(labelA++ + "  "); }
                         }
                         System.out.println();
-                    }
-                    for (y=1;y<=arraySize;y++){ //turns new array into first array
-                        for (x=1;x<=arraySize;x++){
-                            if (future[x][y]) { present[x][y]=true; }
-                            else { present[x][y]=false; }
+                        for (y=1;y<=arraySize;y++){ 
+                            //prints out row numbers
+                            if (label1>=10) { System.out.print(label1++  + "  "); }
+                            else { System.out.print(" " +label1++  + "  "); }
+                            for (x=1;x<=arraySize;x++){ //prints board
+                                update(present[x][y]);
+                                if (present[x][y]==true){
+                                    System.out.print(alive);
+                                } else System.out.print(dead);
+                            }
+                            System.out.println();
                         }
-                    }
+                        for (y=1;y<=arraySize;y++){ //turns new array into first array
+                            for (x=1;x<=arraySize;x++){
+                                if (future[x][y]) { present[x][y]=true; }
+                                else { present[x][y]=false; }
+                            }
+                        }
+                        Thread.sleep(200); //makes it wait 200ms before printing next board
+                    } catch (Exception e){};
                 }
+                System.out.println("finished");
                 command=type.nextLine();
                 break;
                 //ends loop
@@ -219,8 +226,8 @@ public class game
                     else { System.out.print(" " +label1++  + "  "); }
                     for (x=1;x<=arraySize;x++){ //prints board
                         if (present[x][y]==true){
-                            System.out.print("x  ");
-                        } else System.out.print("0  ");
+                            System.out.print(alive);
+                        } else System.out.print(dead);
                     }
                     System.out.println();
                 }
@@ -293,8 +300,8 @@ public class game
                     else { System.out.print(" " +label1++  + "  "); }
                     for (x=1;x<=arraySize;x++){ //prints board
                         if (present[x][y]==true){
-                            System.out.print("x  ");
-                        } else System.out.print("0  ");
+                            System.out.print(alive);
+                        } else System.out.print(dead);
                     }
                     System.out.println();
                 }
@@ -332,8 +339,8 @@ public class game
                     else { System.out.print(" " +label1++  + "  "); }
                     for (x=1;x<=arraySize;x++){ //prints board
                         if (present[x][y]==true){
-                            System.out.print("x  ");
-                        } else System.out.print("0  ");
+                            System.out.print(alive);
+                        } else System.out.print(dead);
                     }
                     System.out.println();
                 }
@@ -441,8 +448,8 @@ public class game
                     else { System.out.print(" " +label1++  + "  "); }
                     for (x=1;x<=arraySize;x++){ //prints board
                         if (present[x][y]==true){
-                            System.out.print("x  ");
-                        } else System.out.print("0  ");
+                            System.out.print(alive);
+                        } else System.out.print(dead);
                     }
                     System.out.println();
                 }
@@ -483,8 +490,8 @@ public class game
                     else { System.out.print(" " +label1++  + "  "); }
                     for (x=1;x<=arraySize;x++){ //prints board
                         if (present[x][y]==true){
-                            System.out.print("x  ");
-                        } else System.out.print("0  ");
+                            System.out.print(alive);
+                        } else System.out.print(dead);
                     }
                     System.out.println();
                 }
@@ -510,13 +517,14 @@ public class game
                     System.out.println("current or c - prints the current generation");
                     break;
                     case "4":
-                    System.out.println("revive or r/kill or k - pick a row and a column and it either revives the cell or kills it depending on what command you use.");
+                    System.out.println("revive or r / kill or k - pick a row and a column and it either revives the cell or kills it depending on what command you use.");
                     break;
                     case "5":
                     System.out.println("z, glider or g, onion rings or o and spaceship or s - clears the board and then creates one of those shapes on the board.");
                     System.out.println("glider and spaceships move across in a straight line");
                     System.out.println("the z shape disappears completely after 45 generations.");
                     System.out.println("the onion rings shape just looks cool.");
+                    break;
                     case "6": System.out.println("end - ends the while loop and quits the game.");
                 }
 
