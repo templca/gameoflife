@@ -21,6 +21,7 @@
  * 17/06
  * 29/06
  * 30/06
+ * 1/07
  */
 
 import java.util.Scanner;
@@ -29,7 +30,9 @@ public class game
     // instance variables - replace the example below with your own
     boolean present [][] = new boolean [22][22];
     boolean future [][] = new boolean [22][22];
+    boolean past [][] = new boolean [22][22];
     int neighbours=0;
+    int nextCommand=0;
     int y;
     int x;
     boolean running=true; //while loop
@@ -153,7 +156,7 @@ public class game
         //starting board-- a smiley face
 
         System.out.println("commands: help (h), next (n), current (c), multiple turns (t), end, revive cells (r), kill cells (k)");
-        System.out.println("add a z (z), glider (g), onion rings (o), spaceship (s)");
+        System.out.println("add a z (z), glider (g), onion rings (o), spaceship (s), phoenix (p)");
         labelA=1;
         label1=1;
         System.out.println();
@@ -183,6 +186,23 @@ public class game
             switch (command.toLowerCase()) {
                 case "next": 
                 case "n":
+                nextCommand++;
+                if(nextCommand==1){
+                    for (y=1;y<=arraySize;y++){
+                        for (x=1;x<=arraySize;x++){
+                            update(present[x][y]);
+                        }
+                    }
+
+                    for (y=1;y<=arraySize;y++){
+                        for (x=1;x<=arraySize;x++){
+
+                            if (future[x][y]) { present[x][y]=true; }
+                            else { present[x][y]=false; }
+                        }
+                    }
+
+                }
                 labelA=1;
                 label1=1;
                 genNumber++;
@@ -210,6 +230,8 @@ public class game
                 // turns the future array into the present array so it goes infinite turns
                 for (y=1;y<=arraySize;y++){
                     for (x=1;x<=arraySize;x++){
+                        if (present[x][y]) {past[x][y]=true;}
+                        else { past[x][y]=false;}
                         if (future[x][y]) { present[x][y]=true; }
                         else { present[x][y]=false; }
                     }
@@ -220,6 +242,23 @@ public class game
                 int turns;
                 System.out.println("how many turns to advance?");
                 try {
+                    nextCommand++;
+                    if(nextCommand==1){
+                        for (y=1;y<=arraySize;y++){
+                            for (x=1;x<=arraySize;x++){
+                                update(present[x][y]);
+                            }
+                        }
+
+                        for (y=1;y<=arraySize;y++){
+                            for (x=1;x<=arraySize;x++){
+
+                                if (future[x][y]) { present[x][y]=true; }
+                                else { present[x][y]=false; }
+                            }
+                        }
+
+                    }
                     turns=type.nextInt();
                     for (int t=1;t<=turns;t++) { 
                         try {
@@ -249,6 +288,8 @@ public class game
                             }
                             for (y=1;y<=arraySize;y++){ //turns new array into first array
                                 for (x=1;x<=arraySize;x++){
+                                    if (present[x][y]) {past[x][y]=true;}
+                                    else { past[x][y]=false;}
                                     if (future[x][y]) { present[x][y]=true; }
                                     else { present[x][y]=false; }
                                 }
@@ -285,7 +326,7 @@ public class game
                     if (label1>=10) { System.out.print(label1++  + "  "); }
                     else { System.out.print(" " +label1++  + "  "); }
                     for (x=1;x<=arraySize;x++){ //prints board
-                        if (present[x][y]==true){
+                        if (past[x][y]==true){
                             System.out.print(alive);
                         } else System.out.print(dead);
                     }
@@ -308,7 +349,9 @@ public class game
                         System.out.println("coordinate not available.");
                     } else {
                         System.out.println("coordinate [" + row + ", "+ column + "] changed to alive");
-                        present[row][column]=true; 
+                        present[row][column]=true;
+                        past[row][column]=true;
+                        nextCommand=0;
                     }
                 } catch (Exception e) {
                     System.out.println("error occurred. try again.");
@@ -329,6 +372,8 @@ public class game
                     } else {
                         System.out.println("coordinate [" + row + ", "+ column + "] changed to dead");
                         present[row][column]=false; 
+                        past[row][column]=false;
+                        nextCommand=0;
                     }
                 } catch (Exception e) {
                     System.out.println("error occurred, try again.");
@@ -337,6 +382,7 @@ public class game
                 break;
                 case "glider":
                 case "g":
+                nextCommand=0;
                 genNumber=1;
                 for (y=1;y<=arraySize;y++){ 
                     for (x=1;x<=arraySize;x++){ //clears board
@@ -375,6 +421,7 @@ public class game
                 }
                 break;
                 case "z":
+                nextCommand=0;
                 genNumber=1;
                 for (y=1;y<=arraySize;y++){ 
                     for (x=1;x<=arraySize;x++){ //clears board
@@ -415,6 +462,7 @@ public class game
                 break;
                 case "onion rings":
                 case "o":
+                nextCommand=0;
                 genNumber=1;
                 for (y=1;y<=arraySize;y++){ 
                     for (x=1;x<=arraySize;x++){ //clears board
@@ -524,6 +572,7 @@ public class game
                 break;
                 case "spaceship":
                 case "s":
+                nextCommand=0;
                 genNumber=1;
                 for (y=1;y<=arraySize;y++){ 
                     for (x=1;x<=arraySize;x++){ //clears board
@@ -566,6 +615,7 @@ public class game
                 break;
                 case "phoenix":
                 case "p":
+                nextCommand=0;
                 genNumber=1;
                 for (y=1;y<=arraySize;y++){ 
                     for (x=1;x<=arraySize;x++){ //clears board
@@ -639,6 +689,7 @@ public class game
                     System.out.println(" -  glider and spaceships move across in a straight line");
                     System.out.println(" -  the z shape disappears completely after 46 generations.");
                     System.out.println(" -  the onion rings shape just looks cool.");
+                    System.out.println(" -  the phoenix has every cell dies each generation, but never dies completely");
                     break;
                     case "6": System.out.println("end - ends the while loop and quits the game.");
                 }
