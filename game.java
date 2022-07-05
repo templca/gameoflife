@@ -43,6 +43,9 @@ public class game
     int genNumber=1;
     String alive= "*  "; //dead and alive cell character
     String dead= "-  ";
+    boolean turnsPrinting=false;
+    int turnCounter;
+    boolean steadyState;
 
     void update(boolean alive){
         // checks for neighbours around the cell
@@ -153,9 +156,16 @@ public class game
         present[13][13]=true;
         present[14][12]=true;
 
+        for (y=1;y<=arraySize;y++){
+            for (x=1;x<=arraySize;x++){
+                if (present[x][y]==true) {past[x][y]=true;}
+                else {past[x][y]=false;}
+            }
+        }
+
         //starting board-- a smiley face
 
-        System.out.println("commands: help (h), next (n), current (c), multiple turns (t), end, revive cells (r), kill cells (k)");
+        System.out.println("commands: help (h), next (n), current (c), multiple turns (t), end, clear, revive cells (r), kill cells (k)");
         System.out.println("add a z (z), glider (g), onion rings (o), spaceship (s), phoenix (p)");
         labelA=1;
         label1=1;
@@ -260,7 +270,8 @@ public class game
 
                     }
                     turns=type.nextInt();
-                    for (int t=1;t<=turns;t++) { 
+                    turnsPrinting=true;
+                    while (turnsPrinting) { 
                         try {
 
                             genNumber++;
@@ -286,6 +297,18 @@ public class game
                                 }
                                 System.out.println();
                             }
+                            for (y=1;y<=arraySize;y++){ //checks if arrays are the same
+                                for (x=1;x<=arraySize;x++){
+                                    if(present[x][y]==future[x][y]) {
+                                        steadyState=true;
+                                    }
+                                }
+                            }
+                            if(steadyState==true){ //tells the loop to stop once a steady state has been reached
+                                turnsPrinting=false;
+                                System.out.println("Reached a steady state, so stopped.");
+                            }
+
                             for (y=1;y<=arraySize;y++){ //turns new array into first array
                                 for (x=1;x<=arraySize;x++){
                                     if (present[x][y]) {past[x][y]=true;}
@@ -294,12 +317,18 @@ public class game
                                     else { present[x][y]=false; }
                                 }
                             }
+
+                            turnCounter++;
                             Thread.sleep(200); //makes it wait 200ms before printing next board
                         } catch (Exception e){
                             System.out.println("error with timer");
-                        };
+                        }
+                        if(turnCounter==turns){
+                            turnsPrinting=false;
+                            System.out.println("finished");
+                        }
                     }
-                    System.out.println("finished");
+
                 } catch (Exception e) {
                     System.out.println("error occurred. try another command.");
                 }
@@ -307,6 +336,15 @@ public class game
                 break;
                 //ends loop
                 case "end": running=false;
+                break;
+                case "clear":
+                for (y=1;y<=arraySize;y++){
+                    for (x=1;x<=arraySize;x++){
+                        present[x][y]=false;
+                        past[x][y]=false;
+                    }
+                }
+                System.out.println("board cleared.");
                 break;
                 case "current":
                 case "c":
@@ -668,8 +706,9 @@ public class game
                 System.out.println("2: multiple turns");
                 System.out.println("3: current");
                 System.out.println("4: revive/kill");
-                System.out.println("5: commands z, glider, onion rings, spaceship");
-                System.out.println("6: end");
+                System.out.println("5: end");
+                System.out.println("6: commands z, glider, onion rings, spaceship");
+                System.out.println("7: end");
                 String help=type.nextLine();
                 switch(help) {
                     case "1":
@@ -684,14 +723,15 @@ public class game
                     case "4":
                     System.out.println("revive or r / kill or k - pick a row and a column and it either revives the cell or kills it depending on what command you use.");
                     break;
-                    case "5":
+                    case "5": System.out.println("clear = clears the board");
+                    case "6":
                     System.out.println("z, glider or g, onion rings or o and spaceship or s - clears the board and then creates one of those shapes on the board.");
                     System.out.println(" -  glider and spaceships move across in a straight line");
                     System.out.println(" -  the z shape disappears completely after 46 generations.");
                     System.out.println(" -  the onion rings shape just looks cool.");
                     System.out.println(" -  the phoenix has every cell dies each generation, but never dies completely");
                     break;
-                    case "6": System.out.println("end - ends the while loop and quits the game.");
+                    case "7": System.out.println("end - ends the while loop and quits the game.");
                 }
 
                 break;
