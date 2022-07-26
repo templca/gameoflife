@@ -43,9 +43,6 @@ public class game
     int genNumber=1;
     String alive= "*  "; //dead and alive cell character
     String dead= "-  ";
-    boolean turnsPrinting=false;
-    int turnCounter;
-    boolean steadyState;
 
     void update(boolean alive){
         // checks for neighbours around the cell
@@ -270,8 +267,7 @@ public class game
 
                     }
                     turns=type.nextInt();
-                    turnsPrinting=true;
-                    while (turnsPrinting) { 
+                    for (int t=0;t<=turns;t++) { 
                         try {
 
                             genNumber++;
@@ -297,17 +293,6 @@ public class game
                                 }
                                 System.out.println();
                             }
-                            for (y=1;y<=arraySize;y++){ //checks if arrays are the same
-                                for (x=1;x<=arraySize;x++){
-                                    if(present[x][y]==future[x][y]) {
-                                        steadyState=true;
-                                    }
-                                }
-                            }
-                            if(steadyState==true){ //tells the loop to stop once a steady state has been reached
-                                turnsPrinting=false;
-                                System.out.println("Reached a steady state, so stopped.");
-                            }
 
                             for (y=1;y<=arraySize;y++){ //turns new array into first array
                                 for (x=1;x<=arraySize;x++){
@@ -318,14 +303,9 @@ public class game
                                 }
                             }
 
-                            turnCounter++;
                             Thread.sleep(200); //makes it wait 200ms before printing next board
                         } catch (Exception e){
                             System.out.println("error with timer");
-                        }
-                        if(turnCounter==turns){
-                            turnsPrinting=false;
-                            System.out.println("finished");
                         }
                     }
 
@@ -729,7 +709,7 @@ public class game
                     System.out.println(" -  glider and spaceships move across in a straight line");
                     System.out.println(" -  the z shape disappears completely after 46 generations.");
                     System.out.println(" -  the onion rings shape just looks cool.");
-                    System.out.println(" -  the phoenix has every cell dies each generation, but never dies completely");
+                    System.out.println(" -  the phoenix has every cell die each generation, but never dies completely");
                     break;
                     case "7": System.out.println("end - ends the while loop and quits the game.");
                 }
