@@ -22,29 +22,23 @@
  * 29/06
  * 30/06
  * 1/07
+ * 28/07
  */
 
 import java.util.Scanner;
 public class game
 {
     // instance variables - replace the example below with your own
-    boolean present [][] = new boolean [22][22];
-    boolean future [][] = new boolean [22][22];
-    boolean past [][] = new boolean [22][22];
-    int neighbours=0;
-    int nextCommand=0;
-    int y;
-    int x;
-    boolean running=true; //while loop
-    String command;
-    int labelA=1; //row and columm numbers
-    int label1=1;
-    int arraySize=20;
-    int genNumber=1;
-    String alive= "*  "; //dead and alive cell character
-    String dead= "-  ";
+    static boolean present [][] = new boolean [22][22];
+    static boolean future [][] = new boolean [22][22];
+    static boolean past [][] = new boolean [22][22];
+    static int neighbours=0;
+    static int y;
+    static int x;
+    static String red= "\u001b[31m";
+    static String Reset= "\u001b[0m";
 
-    void update(boolean alive){
+    static void update(boolean alive){
         // checks for neighbours around the cell
         neighbours=0;
         if (present[x][y+1]==true) {
@@ -90,9 +84,19 @@ public class game
     /**
      * Constructor for objects of class game
      */
-    public game()
+    public static void main(String[] args)
     {
         // initialise instance variables
+
+        boolean running=true; //while loop
+        String command;
+        int labelA=1; //row and columm labels
+        int label1=1;
+        int arraySize=20;
+        int genNumber=1;
+        String alive= "O  "; //dead and alive cell character
+        String dead= "-  ";
+        int nextCommand=0; //stores how many times the next command has been used
         Scanner type = new Scanner(System.in);
 
         present[8][3]=true;
@@ -172,7 +176,7 @@ public class game
         System.out.print("    ");
         for (int i=1;i<=arraySize;i++) {
             if (labelA>=10) { System.out.print(labelA++ + " "); }
-            else { System.out.print(labelA++ + "  "); }
+            else { System.out.print(labelA++ +"  "); }
         }
         System.out.println();
         for (y=1;y<=arraySize;y++){
@@ -181,7 +185,7 @@ public class game
             else { System.out.print(" " +label1++  + "  "); }
             for (x=1;x<=arraySize;x++){ //prints board 
                 if (present[x][y]==true){
-                    System.out.print(alive);
+                    System.out.print(red+alive+Reset);
                 } else System.out.print(dead);
             }
             System.out.println();
@@ -229,7 +233,7 @@ public class game
                         // runs method that checks for neighbours and then prints new board
                         update(present[x][y]);
                         if (present[x][y]==true){
-                            System.out.print(alive);
+                            System.out.print(red+alive+Reset);
                         } else System.out.print(dead);
                     }
                     System.out.println();
@@ -288,7 +292,7 @@ public class game
                                 for (x=1;x<=arraySize;x++){ //prints board
                                     update(present[x][y]);
                                     if (present[x][y]==true){
-                                        System.out.print(alive);
+                                        System.out.print(red+alive+Reset);
                                     } else System.out.print(dead);
                                 }
                                 System.out.println();
@@ -345,7 +349,7 @@ public class game
                     else { System.out.print(" " +label1++  + "  "); }
                     for (x=1;x<=arraySize;x++){ //prints board
                         if (past[x][y]==true){
-                            System.out.print(alive);
+                            System.out.print(red+alive+Reset);
                         } else System.out.print(dead);
                     }
                     System.out.println();
@@ -432,7 +436,7 @@ public class game
                     else { System.out.print(" " +label1++  + "  "); }
                     for (x=1;x<=arraySize;x++){ //prints board
                         if (present[x][y]==true){
-                            System.out.print(alive);
+                            System.out.print(red+alive+Reset);
                         } else System.out.print(dead);
                     }
                     System.out.println();
@@ -472,7 +476,7 @@ public class game
                     else { System.out.print(" " +label1++  + "  "); }
                     for (x=1;x<=arraySize;x++){ //prints board
                         if (present[x][y]==true){
-                            System.out.print(alive);
+                            System.out.print(red+alive+Reset);
                         } else System.out.print(dead);
                     }
                     System.out.println();
@@ -582,7 +586,7 @@ public class game
                     else { System.out.print(" " +label1++  + "  "); }
                     for (x=1;x<=arraySize;x++){ //prints board
                         if (present[x][y]==true){
-                            System.out.print(alive);
+                            System.out.print(red+alive+Reset);
                         } else System.out.print(dead);
                     }
                     System.out.println();
@@ -625,7 +629,7 @@ public class game
                     else { System.out.print(" " +label1++  + "  "); }
                     for (x=1;x<=arraySize;x++){ //prints board
                         if (present[x][y]==true){
-                            System.out.print(alive);
+                            System.out.print(red+alive+Reset);
                         } else System.out.print(dead);
                     }
                     System.out.println();
@@ -672,7 +676,7 @@ public class game
                     else { System.out.print(" " +label1++  + "  "); }
                     for (x=1;x<=arraySize;x++){ //prints board
                         if (present[x][y]==true){
-                            System.out.print(alive);
+                            System.out.print(red+alive+Reset);
                         } else System.out.print(dead);
                     }
                     System.out.println();
